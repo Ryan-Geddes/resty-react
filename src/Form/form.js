@@ -1,10 +1,9 @@
 // Code heavily inspired by:
 // https://stackoverflow.com/questions/46514351/react-dynamic-creation-of-list-item-inside-component
 
-const superagent = require("superagent");
 import React from "react";
-
 import "./form.scss";
+const axios = require("axios");
 
 const ListItem = ({ value }) => <li>{value}</li>;
 
@@ -28,22 +27,9 @@ class Form extends React.Component {
       inputValue: "",
       inputs: [],
       method: "GET",
-      route: ""
+      fetching: false
     };
   }
-
-  //this lets you preload data on DOM load
-
-  // async componentDidMount() {
-  //   // let inputs = ['test1', 'test2'];
-  //   // this.setState({inputs})
-
-  //   const response = async superagent.get('https://swapi.dev/api/people/');
-  //   const inputs = response.body.results  || {};
-  //   console.log(people);
-  //   this.setState({inputs});
-
-  // };
 
   handleInputChange = (event) => {
     this.setState({ fetching: true });
@@ -51,11 +37,37 @@ class Form extends React.Component {
     const route = event.target.value;
     this.setState({ inputValue: route });
     //console.log(route);
-    this.setState({ people, fetching: false });
+    //this.setState({ people, fetching: false });
   };
 
-  handleSubmit = (e) => {
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   axios.get(this.state.inputValue)
+  //   .then(function (response){
+  //     const apiCount = response.data.count;
+  //     const apiHeaders = response.headers;
+  //     const apiResults = response.data.results;
+  //     this.props.handler(apiCount, apiHeaders, apiResults);
+  //     console.log(response.data.results)
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   })
+  // };
+  handleSubmit = async (e) => {
     e.preventDefault();
+    let raw = await axios.get(this.state.inputValue);
+    console.log(raw);
+    let apiCount = raw.data.count;
+    let apiHeaders = raw.headers;
+    let rawResults = raw.data;
+    // let parsedResults = raw.data.results.reduce((list, item) => {
+    //   list[item.name] = item.url;
+    //   return list;
+    // }, {});
+    this.props.handler(apiCount, apiHeaders, rawResults);
+    console.log(apiHeaders);
+
     const inputValue = this.state.method + " " + this.state.inputValue;
     const inputs = this.state.inputs;
     if (inputValue) {
