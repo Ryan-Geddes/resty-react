@@ -40,6 +40,7 @@ class Form extends React.Component {
     //this.setState({ people, fetching: false });
   };
 
+
   handleDataChange = (event) => {
     const textField = event.target.value;
     this.setState({ data: textField });
@@ -81,6 +82,7 @@ class Form extends React.Component {
     let rawResults = raw.data;
     this.props.handler(apiCount, apiHeaders, rawResults);
     
+
     const inputValue = this.state.method + " " + this.state.inputValue;
     const inputs = this.state.inputs;
 
