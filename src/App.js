@@ -1,19 +1,40 @@
 import React from "react";
-import "./styles.css";
+import "./styles.scss";
 import Header from "./Header/header";
 import Footer from "./Footer/footer";
 import Form from "./Form/form";
+import Results from "./Results/results.js";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: "",
-      lastname: "",
-      count: 0
+      count: 0,
+      headers: "",
+      results: []
     };
     // this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  //this lets you preload data on DOM load
+
+  // async componentDidMount() {
+  //   // let inputs = ['test1', 'test2'];
+  //   // this.setState({inputs})
+
+  //   const response = async superagent.get('https://swapi.dev/api/people/');
+  //   const inputs = response.body.results  || {};
+  //   console.log(people);
+  //   this.setState({inputs});
+
+  // };
+
+  handleResults = (count, headers, results) => {
+    this.setState({ count: count, headers: headers, results: results });
+    console.log(this.state);
+  };
+
+  //import Results and pass it info to render
 
   render() {
     return (
@@ -21,15 +42,12 @@ class App extends React.Component {
         <Header />
         <main>
           main
-          <form onSubmit={this.handleSubmit}>
-            <input id="x" name="firstname" onChange={this.handleInputChange} />
-            <button type="submit">Go!</button>
-            <button>GET</button>
-            <button>POST</button>
-            <button>PUT</button>
-            <button>DELETE</button>
-          </form>
-          <section>results</section>
+          <Form handler={this.handleResults} />
+          <Results
+            count={this.state.count}
+            headers={this.state.headers}
+            results={this.state.results}
+          />
         </main>
         <Footer />
       </>
@@ -38,3 +56,8 @@ class App extends React.Component {
 }
 
 export default App;
+
+// app.js - Container
+// Holds state: Count and Results Array
+// A class method that can update state
+// Renders 2 Child Components
