@@ -25,14 +25,14 @@ class Form extends React.Component {
     super(props);
     this.state = {
       inputValue: "",
+      data: "",
       inputs: [],
-      method: "GET",
+      method: 'GET',
       fetching: false
     };
   }
 
   handleInputChange = (event) => {
-    this.setState({ fetching: true });
     //const fieldName = event.target.name;
     const route = event.target.value;
     this.setState({ inputValue: route });
@@ -40,40 +40,64 @@ class Form extends React.Component {
     //this.setState({ people, fetching: false });
   };
 
-  // handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   axios.get(this.state.inputValue)
-  //   .then(function (response){
-  //     const apiCount = response.data.count;
-  //     const apiHeaders = response.headers;
-  //     const apiResults = response.data.results;
-  //     this.props.handler(apiCount, apiHeaders, apiResults);
-  //     console.log(response.data.results)
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   })
-  // };
-  handleSubmit = async (e) => {
-    e.preventDefault();
-    let raw = await axios.get(this.state.inputValue);
-    console.log(raw);
+
+  handleDataChange = (event) => {
+    const textField = event.target.value;
+    this.setState({ data: textField });
+  };
+
+  // handleGet = async() => {
+  //   let raw = await axios.get(this.state.inputValue);
+  //   console.log(raw);
+  //   let apiCount = raw.data.count;
+  //   let apiHeaders = raw.headers;
+  //   let rawResults = raw.data;
+
+  //   // let parsedResults = raw.data.results.reduce((list, item) => {
+  //   //   list[item.name] = item.url;
+  //   //   return list;
+  //   // }, {});
+  //   this.props.handler(apiCount, apiHeaders, rawResults);
+  //   //console.log(apiHeaders);
+
+  //   const inputValue = this.state.method + " " + this.state.inputValue;
+  //   const inputs = this.state.inputs;
+
+  //   if (inputValue) {
+  //     const nextState = [...inputs, inputValue];
+  //     this.setState({ inputs: nextState, inputValue: "", fetching: false })
+  //   }
+  // }
+
+  handleRest = async() => {
+    let raw = await axios(
+      {
+        method: this.state.method,
+        url: this.state.inputValue,
+        data: this.state.data
+      });
+
     let apiCount = raw.data.count;
     let apiHeaders = raw.headers;
     let rawResults = raw.data;
-    // let parsedResults = raw.data.results.reduce((list, item) => {
-    //   list[item.name] = item.url;
-    //   return list;
-    // }, {});
     this.props.handler(apiCount, apiHeaders, rawResults);
-    console.log(apiHeaders);
+    
 
     const inputValue = this.state.method + " " + this.state.inputValue;
     const inputs = this.state.inputs;
+
     if (inputValue) {
       const nextState = [...inputs, inputValue];
-      this.setState({ inputs: nextState, inputValue: "" });
+      this.setState({ inputs: nextState, inputValue: "", fetching: false })
     }
+  }
+
+
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    this.setState({ fetching: true });
+    console.log(this.state)
+    this.handleRest();
   };
 
   updateCount = () => {
@@ -109,7 +133,7 @@ class Form extends React.Component {
               id="get"
               name="get"
               value="GET"
-              onClick={() => this.setState({ method: "GET" })}
+              onClick={() => this.setState({ method: 'GET' })}
             ></input>
 
             <input
@@ -117,7 +141,7 @@ class Form extends React.Component {
               id="put"
               name="put"
               value="PUT"
-              onClick={() => this.setState({ method: "PUT" })}
+              onClick={() => this.setState({ method: 'PUT' })}
             ></input>
 
             <input
@@ -125,7 +149,7 @@ class Form extends React.Component {
               id="post"
               name="post"
               value="POST"
-              onClick={() => this.setState({ method: "POST" })}
+              onClick={() => this.setState({ method: 'POST' })}
             ></input>
 
             <input
@@ -133,11 +157,12 @@ class Form extends React.Component {
               id="delete"
               name="delete"
               value="DELETE"
-              onClick={() => this.setState({ method: "DELETE" })}
+              onClick={() => this.setState({ method: 'DELETE' })}
             ></input>
           </div>
+          <textarea name="data"></textarea>
         </form>
-
+        
         <section>
           <Result method={this.state.method} route={this.state.inputValue} />
           <List items={inputs} />
