@@ -1,5 +1,3 @@
-
-  
 // Code heavily inspired by:
 // https://stackoverflow.com/questions/46514351/react-dynamic-creation-of-list-item-inside-component
 
@@ -28,4 +26,5 @@ class Results extends React.Component {
 }
 
 export default Results;
+
 

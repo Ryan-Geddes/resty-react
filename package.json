@@ -8,6 +8,7 @@
   ],
   "main": "src/index.js",
   "dependencies": {
+
     "axios": "^0.21.0",
     "node-sass": "^4.14.1",
     "react": "17.0.0",
@@ -15,6 +16,7 @@
     "react-json-pretty": "^2.2.0",
     "react-json-view": "^1.19.1",
     "react-scripts": "3.4.3"
+
   },
   "devDependencies": {
     "typescript": "3.8.3"
@@ -32,3 +34,4 @@
     "not op_mini all"
   ]
 }
+
