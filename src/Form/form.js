@@ -13,9 +13,7 @@ const ListItem = ({ value }) => <li>{value}</li>;
 const List = ({ items }) => (
   <ul>
     {items.map((item, i) => (
-      <ListItem key={i} value={item} />
-      //FOR SW API:
-      //<ListItem key={i} value={item.name} />
+      <ListItem key={mongo.dbkey} value={item} />
     ))}
   </ul>
 );
@@ -75,7 +73,9 @@ class Form extends React.Component {
         url: this.state.inputValue,
         data: this.state.data
       });
-
+    //you'll want to refactor this to make your children
+    //as dumb as possible, move as much logic to the app
+    //ask john why
     let apiCount = raw.data.count;
     let apiHeaders = raw.headers;
     let rawResults = raw.data;
