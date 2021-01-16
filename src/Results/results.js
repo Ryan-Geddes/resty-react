@@ -8,7 +8,7 @@ import "./results.scss";
 
 const Count = ({ value }) => <div>{value}</div>;
 const Headers = ({ value }) => <div>{JSON.stringify(value)}</div>;
-const Result = ({ array }) => <div >{JSON.stringify(array)}</div>;
+// const Result = ({ array }) => <div >{JSON.stringify(array)}</div>;
 
 class Results extends React.Component {
   render() {
