@@ -13,7 +13,7 @@ const ListItem = ({ value }) => <li>{value}</li>;
 const List = ({ items }) => (
   <ul>
     {items.map((item, i) => (
-      <ListItem key={mongo.dbkey} value={item} />
+      <ListItem key={item.dbkey} value={item} />
     ))}
   </ul>
 );
