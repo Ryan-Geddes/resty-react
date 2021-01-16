@@ -13,7 +13,7 @@ const ListItem = ({ value }) => <li>{value}</li>;
 const List = ({ items }) => (
   <ul>
     {items.map((item, i) => (
-      <ListItem key={mongo.dbkey} value={item} />
+      <ListItem key={item.dbkey} value={item} />
     ))}
   </ul>
 );
@@ -37,7 +37,6 @@ class Form extends React.Component {
     //console.log(route);
     //this.setState({ people, fetching: false });
   };
-
 
   handleDataChange = (event) => {
     const textField = event.target.value;
@@ -81,6 +80,7 @@ class Form extends React.Component {
     let apiHeaders = raw.headers;
     let rawResults = raw.data;
     this.props.handler(apiCount, apiHeaders, rawResults);
+    
     const inputValue = this.state.method + " " + this.state.inputValue;
     const inputs = this.state.inputs;
 
